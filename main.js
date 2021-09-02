@@ -11,25 +11,26 @@ const searchBook = document.getElementById('search-btn').addEventListener('click
 const showItems = document.getElementById("show-items");
 const countSearchResult = document.getElementById("count-result");
 
+const spinner = document.getElementById('loading-spinner');
+
 
 // fetch all the data items from api 
 const getApiData = (searchText) => {
-    // error checking that user didn't put any search value 
-    if (searchText === '') {
-        countSearchResult.innerHTML ='';
-        showItems.innerHTML = `
+	countSearchResult.innerHTML = "";
+	showItems.innerHTML = "";
+	// error checking that user didn't put any search value
+	if (searchText === "") {
+		showItems.innerHTML = `
         <h3 class="text-center p-3 bg-danger text-light">Enter some text</h3>
         `;
-        
-    } else {
-        // fetch data by the value of search field
-        const url = `https://openlibrary.org/search.json?q=${searchText}`;
-				fetch(url)
-				.then((res) => res.json())
-				.then((data) => showSearchData(data.docs,searchText,data.numFound));
-        
-    }
-    
+	} else {
+		spinner.classList.remove("d-none");
+		// fetch data by the value of search field
+		const url = `https://openlibrary.org/search.json?q=${searchText}`;
+		fetch(url)
+			.then((res) => res.json())
+			.then((data) => showSearchData(data.docs, searchText, data.numFound));
+	}
 }
 
 
@@ -42,9 +43,12 @@ const showSearchData = (books, searchText, numFound) => {
 	
 	let count = 0;
     showItems.innerHTML = "";
+    spinner.classList.add("d-none");
+    
     
     // implementing for Each coz api data we found as an array  
-	books.forEach((element) => {
+    books.forEach((element) => {
+        
 		// 'count' variable is used for count every forEach for that we can get how many times for loops run
 		count++;
 		const newDiv = document.createElement("div");
