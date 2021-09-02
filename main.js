@@ -26,7 +26,7 @@ const getApiData = (searchText) => {
         const url = `https://openlibrary.org/search.json?q=${searchText}`;
 				fetch(url)
 				.then((res) => res.json())
-				.then((data) => showSearchData(data.docs,searchText));
+				.then((data) => showSearchData(data.docs,searchText,data.numFound));
         
     }
     
@@ -35,8 +35,9 @@ const getApiData = (searchText) => {
 
 //  showSearchData called for collecting the data from the api 
 
-const showSearchData = (books,searchText) => {
-	console.log(books);
+const showSearchData = (books, searchText, numFound) => {
+	// console.log(books);
+	// console.log(numFound);
 	let count = 0;
     showItems.innerHTML = "";
     
@@ -75,7 +76,9 @@ const showSearchData = (books,searchText) => {
 	}
 	//  search result count message
 	else {
-		countSearchResult.innerHTML = `<h5 class="text-success">
-        ${searchText}'s ${count} result found</h5>`;
+        countSearchResult.innerHTML = `
+        <h5 class=" text-center bg-warning p-3"> Total: ${numFound} result found</h5>
+        <h5 class="text-success">
+        ${searchText}'s  displaying ${count} result</h5>`;
 	}
 }
