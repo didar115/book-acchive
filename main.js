@@ -34,10 +34,12 @@ const getApiData = (searchText) => {
 
 
 //  showSearchData called for collecting the data from the api 
+// "Books" used for collecting search result item [it's genaraly gather 100 items]
+// "searchText" used for displaying which data are showing written in text like: 'laravel' s 100 result found
+// "numFound" used for collecting total search result item found
 
 const showSearchData = (books, searchText, numFound) => {
-	// console.log(books);
-	// console.log(numFound);
+	
 	let count = 0;
     showItems.innerHTML = "";
     
@@ -58,7 +60,8 @@ const showSearchData = (books, searchText, numFound) => {
                     <h5 class="card-title">${element.title}</h5>
                     <p class="card-text"> <span class="fw-bold">Author:</span> ${element.author_name}</p>
                     <p class="card-text"> <span class="fw-bold">Publisher:</span> ${element.publisher}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a> 
+                    <p class="card-text"> <span class="fw-bold">Book Language:</span> ${element.language}</p>
+                  
                 </div>
                 <div class="card-footer">
                      <small class="text-muted">First Published: ${element.first_publish_year}</small>
@@ -78,7 +81,6 @@ const showSearchData = (books, searchText, numFound) => {
 	else {
         countSearchResult.innerHTML = `
         <h5 class=" text-center bg-warning p-3"> Total: ${numFound} result found</h5>
-        <h5 class="text-success">
-        ${searchText}'s  displaying ${count} result</h5>`;
+        <h5 class="text-success"> ${searchText}'s  displaying ${count} result</h5>`;
 	}
 }
